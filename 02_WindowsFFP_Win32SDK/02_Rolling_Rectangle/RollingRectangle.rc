@@ -1,0 +1,4 @@
+#include"RollingRectangle.h"
+
+MYICON_SAT ICON icon.ico
+

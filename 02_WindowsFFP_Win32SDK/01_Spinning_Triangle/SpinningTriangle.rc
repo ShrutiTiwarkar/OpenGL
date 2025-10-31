@@ -1,0 +1,4 @@
+#include"SpinningTriangle.h"
+
+MYICON_SAT ICON icon.ico
+

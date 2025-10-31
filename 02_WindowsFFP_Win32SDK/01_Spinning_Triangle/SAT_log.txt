@@ -1,0 +1,2 @@
+Log file successfully created, Program started
+Log file closed successfully
