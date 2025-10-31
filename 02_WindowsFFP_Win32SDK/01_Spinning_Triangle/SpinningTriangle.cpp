@@ -1,8 +1,8 @@
 /************************************************************
  *                                                          *
  *                                                          *
- * Description :=>      This program diplays the Blue       *
- *                      Screen.                             *
+ * Description :=>      This program diplays the Spinning   *
+ *                      Triangle                            *
  *                      It also include   startup template  *
  *                      -   Blank Window                    *
  *                      -   Centering Window                *

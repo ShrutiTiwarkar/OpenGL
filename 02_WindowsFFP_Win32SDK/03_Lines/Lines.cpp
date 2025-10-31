@@ -1,8 +1,8 @@
 /************************************************************
  *                                                          *
  *                                                          *
- * Description :=>      This program diplays the Rolling    *
- *                      Rectangle.                          *
+ * Description :=>      This program diplays the multiple   *
+ *                      Lines.                              *
  *                      It also include   startup template  *
  *                      -   Blank Window                    *
  *                      -   Centering Window                *
@@ -11,7 +11,6 @@
  *                      -   Icon                            *
  *                      -   Game Loop                       *
  * ********************************************************/
-
 
 /************************************************************
  *  Header Files    :=>                                     *
@@ -22,9 +21,9 @@
  * **********************************************************/
 #include<Windows.h>
 #include<stdio.h>
-#include"RollingRectangle.h"
+#include"Lines.h"
 #include<gl/GL.h>
-//added Graphic Libarry Utility
+//added Graphic Library Utility
 #include<gl/GLU.h>
 
 /************************************************************
@@ -40,7 +39,6 @@
 #define WIN_WIDTH_SAT 800
 #define WIN_HEIGHT_SAT 600
 
-
 /***********************************************************
  * Library      :=>                                         *
  *                  Add opengl32.lib by using               *
@@ -51,8 +49,6 @@
  * ********************************************************/
 #pragma comment(lib, "opengl32.lib")
 #pragma comment(lib, "glu32.lib")
-
-
 
 /***********************************************************
  * Global Variables                                         *
@@ -72,15 +68,14 @@ FILE *gpFile_SAT = NULL;                                    // Log file pointer
 bool gbActivatWindow_SAT = false;                           // check the window has focus or not
 HDC ghdc = NULL;                                            
 HGLRC ghrc = NULL;
-//Decipline 2
-GLfloat angle = 0.0f;
+
+
 /************************************************************
  * Global Function  :=>                                     *
  *                                                          *
  *                      CALLBACK :  WndProc                 *             
  * *********************************************************/
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
-
 
 /************************************************************************
 * Entry Point function                      							*
@@ -97,9 +92,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLi
     
     void Initialize(void);
     void Display(void);
-    // Decipline 3
-    void Update();
-    
+
 
     WNDCLASSEX wndclass;                                                   // Structure of window features     
     HWND hwnd;                                                             // Unique Id store, window handle
@@ -148,7 +141,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLi
 	*********************************************************/
     hwnd = CreateWindowEx( WS_EX_APPWINDOW,                                     // The screen should be above of taskbar
         szAppName,                                                              // Class Name
-        TEXT("Double Buffer Triangle: Shruti Tiwarkar"),                            // Tittle of Wiondow 
+        TEXT("Multiple Lines : Shruti Tiwarkar"),                            // Tittle of Wiondow 
         WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_VISIBLE,   // Style Macro
         // Centering the Window             
         DesktopWindowCenterX_SAT,                                               // x - cordinates
@@ -216,10 +209,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLi
             if(gbActivatWindow_SAT == true){
                 //code remaining
                 Display();
-                // Decipline 3
-                Update();
-
-                
             }
         }
     }
@@ -427,59 +416,89 @@ void Resize(int width, int height){
 
 void Display(void) {
 
-    //Decipline 2
-    //void Update(void);
 
-    //Decipline 1
-    //static GLfloat angle = 0.0f;
-    
     //code
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
- 
+
     //added
     glTranslatef(0.0f, 0.0f, -3.0f);
-    glRotatef(angle, 1.0f, 0.0f, 0.0f);
-    
-    glBegin(GL_QUADS);
+    glEnable(GL_LINE_STIPPLE);
 
-    glColor3f(1.0f, 0.0f, 0.0f);
-    glVertex3f(0.25f, 0.25f, 0.0f);
-    
-    glColor3f(1.0f, 1.0f, 0.0f);
-    glVertex3f(-0.25f, 0.25f, 0.0f);
+        glLineWidth(2.0f);
+        // dotted
+        glColor3f(0.0f, 1.0f, 0.0f);
+        glLineStipple(1, 0x0101);
+        glBegin(GL_LINES);
+            glVertex2d(-1.0f, 1.0f);
+            glVertex2d(1.0f, 1.0f);
+        glEnd();
 
-    glColor3f(0.0f, 0.0f, 1.0f);
-    glVertex3f(-0.25f, -0.25f, 0.0f);
+        // dashed
+        glColor3f(1.0f, 0.0f, 0.0f);
+        glLineStipple(1, 0x00FF);
+        glBegin(GL_LINES);
+            glVertex2d(-1.0f, 0.6f);
+            glVertex2d(1.0f, 0.6f);
+        glEnd();
 
-    glColor3f(0.0f, 0.0f, 1.0f);
-    glVertex3f(0.25f, -0.25f, 0.0f);
+        // dash-dot-dash
+        glColor3f(0.0f, 0.0f, 1.0f);
+        glLineStipple(1, 0x1C47);
+        glBegin(GL_LINES);
+            glVertex2d(-1.0f, 0.3f);
+            glVertex2d(1.0f, 0.3f);
+        glEnd();
+
+        //----------------------------
+
+        glLineWidth(5.0f);
+
+        // dotted
+        glColor3f(0.0f, 1.0f, 0.0f);
+        glLineStipple(1, 0x0101);
+        glBegin(GL_LINES);
+            glVertex2d(-1.0f, 0.0f);
+            glVertex2d(1.0f, 0.0f);
+        glEnd();
+
+        // dashed
+        glColor3f(1.0f, 0.0f, 0.0f);
+        glLineStipple(1, 0x00FF);
+        glBegin(GL_LINES);
+            glVertex2d(-1.0f, -0.3f);
+            glVertex2d(1.0f, -0.3f);
+        glEnd();
+
+        // dash-dot-dash
+        glColor3f(0.0f, 0.0f, 1.0f);
+        glLineStipple(1, 0x1C47);
+        glBegin(GL_LINES);
+            glVertex2d(-1.0f, -0.6f);
+            glVertex2d(1.0f, -0.6f);
+        glEnd();
+
+        glLineWidth(8.0f);
+        //---------------------------------------------
+        // dash-dot-dash
+        glColor3f(0.0f, 0.0f, 1.0f);
+        glLineStipple(5, 0x1C47);
+        glBegin(GL_LINES);
+            glVertex2d(-1.0f, -1.0f);
+            glVertex2d(1.0f, -1.0f);
+        glEnd();
+
+        //---------------------------------------------
 
 
-    glEnd();
-    // angle = angle + 0.1f;
-    // //Decipline 1
-    // if(angle >= 360.0f){
-    //     angle = 0.0f;
-    // }
 
-    // Decipline 2
-    // Update();
-
+            
     // Removed because of double buffer
     //glFlush();
-
+    
+    glDisable(GL_LINE_STIPPLE);
     SwapBuffers(ghdc);
-}
-
-//Decipline 2 & 3
-void Update(){
-
-    angle = angle + 0.1f;
-    if(angle >= 360.0f){
-        angle = 0.0f;
-    }
 }
 
 void UnInitialize() {
@@ -509,7 +528,7 @@ void UnInitialize() {
     }
 
     if(ghrc){
- 
+
         wglDeleteContext(ghrc);
         ghrc = NULL;
     }
@@ -528,4 +547,3 @@ void UnInitialize() {
     }
 
 }
-
