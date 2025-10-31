@@ -1,8 +1,8 @@
 /************************************************************
  *                                                          *
  *                                                          *
- * Description :=>      This program diplays the multiple   *
- *                      Lines.                              *
+ * Description :=>      This program diplays the Vertex     *
+ *                      Array.                              *
  *                      It also include   startup template  *
  *                      -   Blank Window                    *
  *                      -   Centering Window                *
@@ -400,7 +400,7 @@ void Initialize(void) {
 
     glEnableClientState(GL_COLOR_ARRAY);
     glEnableClientState(GL_VERTEX_ARRAY);
-    
+
     Resize(WIN_WIDTH_SAT, WIN_HEIGHT_SAT);
 
 }
